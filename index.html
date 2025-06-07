@@ -1,26 +1,48 @@
-
 <!DOCTYPE html>
 <html lang="bg">
 <head>
   <meta charset="UTF-8">
   <title>Форма за логване на шофьор</title>
-  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h2>Форма за логване на шофьор</h2>
-  <form id="driverForm">
-    <label>Име:</label><br>
+  <form id="driverForm" enctype="multipart/form-data" method="POST">
+    <label for="name">Име:</label><br>
     <input type="text" name="name" required><br><br>
 
-    <label>Телефон:</label><br>
+    <label for="phone">Телефон:</label><br>
     <input type="tel" name="phone" required><br><br>
 
-    <label>Прикачи файл:</label><br>
-    <input type="file" name="file" required><br><br>
+    <label for="file">Прикачи файл (Excel):</label><br>
+    <input type="file" name="file" accept=".xlsx" required><br><br>
 
     <button type="submit">Изпрати</button>
   </form>
 
-  <script src="script.js"></script>
+  <script>
+    const webhookUrl = "https://secure-utterly-phoenix.ngrok-free.app/webhook-test/driver-reminder"; // замени с production URL от n8n
+
+    document.getElementById("driverForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+
+      try {
+        const res = await fetch(webhookUrl, {
+          method: "POST",
+          body: formData
+        });
+
+        if (res.ok) {
+          alert("Изпратено успешно!");
+        } else {
+          alert("Грешка при изпращане.");
+        }
+      } catch (err) {
+        alert("Грешка при изпращане.");
+        console.error(err);
+      }
+    });
+  </script>
 </body>
 </html>
