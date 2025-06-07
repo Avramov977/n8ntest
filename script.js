@@ -1,5 +1,5 @@
 
-const webhookUrl = "https://your-n8n-url.com/webhook/driver-form"; // смени с реален
+const webhookUrl = "https://secure-utterly-phoenix.ngrok-free.app/webhook-test/driver-reminder"; // смени с реален
 
 document.getElementById("driverForm").addEventListener("submit", function(e) {
   e.preventDefault();
